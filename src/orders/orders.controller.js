@@ -8,7 +8,7 @@ const nextId = require("../utils/nextId");
 
 // TODO: Implement the /orders handlers needed to make the tests pass
 function orderExists(req, res, next){
-  const { orderId } = req.params;
+  const {orderId} = req.params;
   const foundOrder = orders.find(order => order.id === orderId);
   if(foundOrder){
     res.locals.order = foundOrder;
@@ -16,14 +16,15 @@ function orderExists(req, res, next){
   }
   next({
     status: 404,
-    message: `Order does not exist: ${orderId}`    
+    message: `Order does not exist: ${orderId}`
+  })
+}
+
+function read(req, res, next){
+  res.json({
+    data: res.locals.order
   });
 }
-
-function read(req, res){
-  res.json({data: res.locals.order});
-}
-
 
 module.exports = {
   read: [orderExists, read],

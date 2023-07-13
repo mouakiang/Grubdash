@@ -5,7 +5,6 @@ const orders = require(path.resolve("src/data/orders-data"));
 
 // Use this function to assigh ID's when necessary
 const nextId = require("../utils/nextId");
-const { stat } = require("fs");
 
 // TODO: Implement the /orders handlers needed to make the tests pass
 function orderExists (req, res, next) {
@@ -36,7 +35,7 @@ function bodyDataHas (propertyName) {
 }
 
 function create (req, res) {
-  const { data: { id, deliverTo, mobileNumber, status } = {} } = req.body;
+  const { data: {deliverTo, mobileNumber, status } = {} } = req.body;
   const newOrder = {
     id: nextId(),
     deliverTo,
@@ -49,7 +48,7 @@ function create (req, res) {
 
 function update (req, res) {
   const order = res.locals.order;
-  const { data: { id, deliverTo, mobileNumber, status } = {} } = req.body;
+  const { data: {deliverTo, mobileNumber, status } = {} } = req.body;
 
   order.deliverTo = deliverTo;
   order.mobileNumber = mobileNumber;
@@ -157,8 +156,8 @@ module.exports = {
     orderExists,
     bodyDataHas('deliverTo'),
     bodyDataHas('mobileNumber'),
-    orderIdCheck,
-    statusCheck,
+    idCheck,
+    checkStatus,
     dishCheck,
     update
   ],
